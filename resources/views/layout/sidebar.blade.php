@@ -74,7 +74,7 @@
     </div>
 
     <li class="nav-item {{ $menu_active == 'transaksi' ? 'active' : '' }}">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('history.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Laporan Mutasi</span></a>
     </li>

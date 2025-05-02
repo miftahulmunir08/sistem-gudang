@@ -15,6 +15,7 @@ Route::apiResource('pegawai', CT\Master\PegawaiController::class)->middleware('a
 Route::apiResource('categories', CT\Master\CategoryController::class)->middleware('auth:sanctum');
 Route::apiResource('products', CT\Master\ProductController::class)->middleware('auth:sanctum');
 Route::apiResource('locations', CT\Master\LocationController::class)->middleware('auth:sanctum');
+Route::apiResource('mutations', CT\Data_Mutation\MutationController::class)->middleware('auth:sanctum');
 
 
 Route::group(['prefix' => 'pegawai-action', 'middleware' => 'auth:sanctum'], function () {
@@ -38,9 +39,14 @@ Route::group(['prefix' => 'location-action', 'middleware' => 'auth:sanctum'], fu
     Route::get('/all', [CT\Master\LocationController::class, 'getAll'])->name('data.location.all');
 });
 
-Route::group(['prefix' => 'mutation-action','middleware' => 'auth:sanctum'], function () {
+Route::group(['prefix' => 'mutation-action', 'middleware' => 'auth:sanctum'], function () {
     Route::get('/data', [CT\Data_Mutation\MutationController::class, 'getData'])->name('data.mutation');
     Route::get('/all', [CT\Data_Mutation\MutationController::class, 'getAll'])->name('data.mutation.all');
+});
+
+
+Route::group(['prefix' => 'utility-action', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('/type_all_mutation', [CT\Utility\UtilityController::class, 'getAllMutation'])->name('data.utilty-type-mutasi.all');
 });
 
 

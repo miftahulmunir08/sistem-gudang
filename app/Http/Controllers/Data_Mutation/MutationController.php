@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Data_Mutation;
 
 use App\Http\Controllers\Controller;
 use App\Models\Mutation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class MutationController extends Controller
@@ -20,14 +22,14 @@ class MutationController extends Controller
 
     public function getData()
     {
-        $mutation = Mutation::with(['lokasi_pertama','lokasi_kedua', 'product', 'pegawai'])->get();
+        $mutation = Mutation::with(['lokasi_pertama', 'lokasi_kedua', 'product', 'pegawai'])->get();
 
         return DataTables::of($mutation)
             ->addColumn('no', function () {
                 return 'DT_RowIndex';
             })
-            ->addColumn('created_at', function ($mutation) {
-                return $mutation->created_at;
+            ->addColumn('tanggal', function ($mutation) {
+                return \Carbon\Carbon::parse($mutation->tanggal)->format('d/m/Y');
             })
             ->addColumn('lokasi_awal', function ($mutation) {
                 return $mutation->lokasi_pertama->name;
@@ -66,6 +68,13 @@ class MutationController extends Controller
     }
 
 
+    public function getAll()
+    {
+        $mutation = Mutation::all();
+        return response()->json(['data' => $mutation]);
+    }
+
+
     // public function getAll()
     // {
     //     $category = Category::all();
@@ -85,7 +94,60 @@ class MutationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required',
+            'location_from' => 'required',
+            'location_to' => 'required',
+            'product' => 'required',
+            'qty' => 'required',
+            'pegawai' => 'required',
+            'jenis_mutasi' => 'required|in:masuk,keluar,pindah'
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validasi gagal',
+                'errors' => $validator->errors()
+            ], 422);
+        } else {
+            $id = \Illuminate\Support\Str::uuid()->toString();
+
+
+            if ($request->isJson()) {
+                // dari API
+                $data['tanggal'] = Carbon::createFromFormat('d/m/Y', $request->tanggal)->format('Y-m-d');
+            } else {
+                // dari Blade (form biasa), kemungkinan sudah 'Y-m-d'
+                $data['tanggal'] = $request->tanggal;
+            }
+
+            $data['uuid']      = $id;
+            $data['lokasi_awal']      = $request->location_from;
+            $data['lokasi_akhir']      = $request->location_to;
+            $data['product_id']      = $request->product;
+            $data['jumlah']      = $request->qty;
+            $data['pegawai_id']      = $request->pegawai;
+            $data['jenis']      = $request->jenis_mutasi;
+            $data['keterangan']      = '';
+
+
+            $mutation = Mutation::create($data);
+
+            if (!$mutation) {
+                return response()->json([
+                    'message' => '404',
+                    'error' => 'Insert Mutation Failed',
+                ], 404);
+            }
+
+            return response()->json([
+                'message' => '200',
+                'data' => $mutation,
+            ], 200);
+        }
     }
 
     /**
@@ -93,7 +155,20 @@ class MutationController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if ($id != null) {
+            $mutation = Mutation::where('uuid', $id)->first();
+            if (!$mutation) {
+                return response()->json([
+                    'message' => '404',
+                    'error' => 'Mutation not found',
+                ], 404);
+            }
+
+            return response()->json([
+                'message' => '200',
+                'data' => $mutation,
+            ], 200);
+        }
     }
 
     /**
@@ -109,7 +184,56 @@ class MutationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required',
+            'location_from' => 'required',
+            'location_to' => 'required',
+            'product' => 'required',
+            'qty' => 'required',
+            'pegawai' => 'required',
+            'jenis_mutasi' => 'required|in:masuk,keluar,pindah'
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validasi gagal',
+                'errors' => $validator->errors()
+            ], 422);
+        } else {
+
+            $mutation = Mutation::findOrFail($id);
+
+            if ($request->isJson()) {
+                // dari API
+                $data['tanggal'] = Carbon::createFromFormat('d/m/Y', $request->tanggal)->format('Y-m-d');
+            } else {
+                // dari Blade (form biasa), kemungkinan sudah 'Y-m-d'
+                $data['tanggal'] = $request->tanggal;
+            }
+            
+            $data['lokasi_awal']      = $request->location_from;
+            $data['lokasi_akhir']      = $request->location_to;
+            $data['product_id']      = $request->product;
+            $data['jumlah']      = $request->qty;
+            $data['pegawai_id']      = $request->pegawai;
+            $data['jenis']      = $request->jenis_mutasi;
+            $data['keterangan']      =  '';
+
+            $mutation->update($data);
+
+            if (!$mutation) {
+                return response()->json([
+                    'message' => '404',
+                    'error' => 'Update Mutation Failed',
+                ], 404);
+            }
+            return response()->json([
+                'message' => '200',
+                'data' => $mutation,
+            ], 200);
+        }
     }
 
     /**
@@ -118,5 +242,11 @@ class MutationController extends Controller
     public function destroy(string $id)
     {
         //
+        $mutation = Mutation::findOrFail($id);
+
+        // Delete the mutation
+        $mutation->delete();
+
+        return response()->json(['message' => 'Mutation deleted successfully']);
     }
 }

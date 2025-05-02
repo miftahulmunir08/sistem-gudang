@@ -25,6 +25,10 @@ Route::group(['prefix' => 'master', 'middleware' => 'auth'], function () {
 });
 
 
-Route::group(['prefix' => 'mutation'], function () {
+Route::group(['prefix' => 'mutation','middleware' => 'auth'], function () {
     Route::get('/', [CT\Data_Mutation\MutationController::class, 'index'])->name('mutation.index');
+});
+
+Route::group(['prefix' => 'history','middleware' => 'auth'], function () {
+    Route::get('/', [CT\History\FilterController::class, 'index'])->name('history.index');
 });

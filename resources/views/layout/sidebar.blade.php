@@ -30,19 +30,25 @@
     <li class="nav-item {{ $menu_active == 'user' ? 'active' : '' }} ">
         <a class="nav-link" href="{{ route('master.user') }}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>User</span></a>
+            <span>Pegawai</span></a>
     </li>
 
     <li class="nav-item {{ $menu_active == 'category' ? 'active' : '' }} ">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('master.category') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Category</span></a>
     </li>
 
     <li class="nav-item {{ $menu_active == 'product' ? 'active' : '' }} ">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('master.product') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Produk</span></a>
+    </li>
+
+    <li class="nav-item {{ $menu_active == 'lokasi' ? 'active' : '' }} ">
+        <a class="nav-link" href="{{ route('master.category') }}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Lokasi</span></a>
     </li>
 
     <hr class="sidebar-divider">

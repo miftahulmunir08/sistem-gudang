@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_lokasi', function (Blueprint $table) {
+        Schema::create('master_pegawai', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique();
-            $table->string('name'); // contoh: "Rak A1", "Gudang 2", dll
-            $table->string('description')->nullable();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('phone');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_lokasi');
+        Schema::dropIfExists('master_pegawai');
     }
 };

@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('data_mutasi', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
             $table->foreignId('product_id')->constrained('master_product');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('pegawai_id')->constrained('master_pegawai');
             $table->enum('jenis', ['masuk', 'keluar', 'pindah']);
             $table->integer('jumlah');
             $table->foreignId('lokasi_awal')->nullable()->constrained('master_lokasi');

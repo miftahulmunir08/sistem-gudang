@@ -4,61 +4,41 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Customer Table</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Category Table</h6>
         </div>
         <div class="card-body">
             <div class="float-right mb-4">
                 <button href="#" class="btn btn-primary text-end" onclick="add()"><i class="fa fa-plus"></i>
-                    Tambah Customer</button>
+                    Tambah Category</button>
             </div>
 
             <div class="table-responsive">
-                <table class="table table-bordered" id="table-customer" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="table-category" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                 </table>
             </div>
 
-            <div class="modal" id="modal-customer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal" id="modal-category" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Add Customer</h5>
+                            <h5 class="modal-title">Add Category</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="customer_form">
+                        <form id="category_form">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="customer_name">Name</label>
-                                    <input name="customer_name" type="text" class="form-control" id="customer_name" aria-describedby="emailHelp" placeholder="Enter Name">
+                                    <label for="category_name">Name</label>
+                                    <input name="category_name" type="text" class="form-control" id="category_name" aria-describedby="emailHelp" placeholder="Enter Name">
                                     <small id="error_name" class="form-text text-danger">We'll never share your email with anyone else.</small>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="customer_email">Email</label>
-                                    <input name="customer_email" type="email" class="form-control" id="customer_email" aria-describedby="emailHelp" placeholder="Enter Email">
-                                    <small id="error_email" class="form-text text-danger">We'll never share your email with anyone else.</small>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="customer_phone">Phone</label>
-                                    <input name="customer_phone" type="text" class="form-control" id="customer_phone" aria-describedby="emailHelp" placeholder="Enter Phone">
-                                    <small id="error_phone" class="form-text text-danger">We'll never share your email with anyone else.</small>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="customer_jabatan">Jabatan</label>
-                                    <input name="customer_jabatan" type="text" class="form-control" id="customer_jabatan" aria-describedby="emailHelp" placeholder="Enter Jabatan">
-                                    <small id="error_jabatan" class="form-text text-danger">We'll never share your email with anyone else.</small>
                                 </div>
 
                             </div>
@@ -81,7 +61,7 @@
 <script>
     var table;
     var modal = $('#modal-category');
-    var formData = $('#customer_form');
+    var formData = $('#category_form');
     var saveData;
     var id_category;
     var url, method;
@@ -97,14 +77,11 @@
     $(document).ready(function() {
         loadData();
         $('#error_name').css('visibility', 'hidden');
-        $('#error_email').css('visibility', 'hidden');
-        $('#error_phone').css('visibility', 'hidden');
-        $('#error_jabatan').css('visibility', 'hidden');
     });
 
     function loadData() {
 
-        $('#table-customer').DataTable({
+        $('#table-category').DataTable({
             bDestroy: true,
             searching: true,
             processing: true,
@@ -112,7 +89,7 @@
             responsive: true,
             ordering: true,
             serverSide: true,
-            ajax: "{{ route('data.user') }}",
+            ajax: "{{ route('data.category') }}",
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'no',
@@ -122,14 +99,6 @@
                 {
                     data: 'name',
                     name: 'name'
-                },
-                {
-                    data: 'email',
-                    name: 'email'
-                },
-                {
-                    data: 'phone',
-                    name: 'phone'
                 },
                 {
                     data: 'action',
@@ -144,34 +113,29 @@
 
     function add() {
         saveData = 'add';
-        $('#modal-customer').modal('show');
+        $('#modal-category').modal('show');
         formData[0].reset();
-        $(".modal-title").text("Tambah Customer");
-        $(".add-customer").text("Tambah");
+        $(".modal-title").text("Tambah Category");
+        $(".add-category").text("Tambah");
     }
 
     function byid(id) {
-        // alert(id);
 
         var uuid = id;
-        id_customer = id;
+        id_category = id;
         saveData = 'edit';
 
-        $('#modal-customer').modal('show');
-        $(".modal-title").text("Update Customer");
+        $('#modal-category').modal('show');
+        $(".modal-title").text("Update Category");
         $(".add-customer").text("Update");
 
         $.ajax({
-            url: "{{ route('user.show', ':uuid') }}".replace(':uuid', uuid),
+            url: "{{ route('categories.show', ':uuid') }}".replace(':uuid', uuid),
             method: 'get',
             dataType: "json",
             data: formData,
             success: function(response) {
-                console.log(response);
-                $("#customer_name").val(response.data.name);
-                $("#customer_email").val(response.data.email);
-                $("#customer_phone").val(response.data.phone);
-                $("#customer_jabatan").val(response.data.jabatan);
+                $("#category_name").val(response.data.name);
             },
             error: function(response) {
 
@@ -202,7 +166,7 @@
             if (result.isConfirmed) {
 
                 if (saveData == 'delete') {
-                    url = "{{ route('user.destroy', ':uuid') }}";
+                    url = "{{ route('categories.destroy', ':uuid') }}";
                     url = url.replace(':uuid', id);
                     method = 'DELETE';
                 }
@@ -248,14 +212,14 @@
         const formData = new FormData(this);
         if (saveData == 'add') {
             method = 'POST';
-            url = "{{ route('user.store') }}";
+            url = "{{ route('categories.store') }}";
         } else if (saveData == 'edit') {
-            url = "{{ route('user.update', ':uuid') }}";
-            url = url.replace(':uuid', id_customer);
+            url = "{{ route('categories.update', ':uuid') }}";
+            url = url.replace(':uuid', id_category);
             method = 'PUT';
         } else if (saveData == 'delete') {
-            url = "{{ route('user.update', ':uuid') }}";
-            url = url.replace(':uuid', id_customer);
+            // url = "{{ route('categories.update', ':uuid') }}";
+            // url = url.replace(':uuid', id_customer);
             method = 'DELETE';
         }
 
@@ -275,8 +239,8 @@
             dataType: 'json',
             success: function(response) {
                 console.log(response);
-                $('#modal-customer').hide();
-                $('#modal-customer').modal('hide');
+                $('#modal-category').hide();
+                $('#modal-category').modal('hide');
                 loadData();
                 Swal.fire({
                     title: saveData + " Data Berhasil",
@@ -287,16 +251,8 @@
 
                 console.log(response);
 
-                if (response.responseJSON.errors.customer_name != undefined) {
+                if (response.responseJSON.errors.category_name != undefined) {
                     $('#error_name').css('visibility', 'visible');
-                }
-
-                if (response.responseJSON.errors.customer_email != undefined) {
-                    $('#error_email').css('visibility', 'visible');
-                }
-
-                if (response.responseJSON.errors.customer_phone != undefined) {
-                    $('#error_phone').css('visibility', 'visible');
                 }
 
                 Swal.fire({
@@ -304,10 +260,7 @@
                     icon: "error"
                 });
 
-                $("#error_name").html(response.responseJSON.errors.customer_name);
-                $("#error_email").html(response.responseJSON.errors.customer_email);
-                $("#error_phone").html(response.responseJSON.errors.customer_phone);
-                // $("#error_icon").html(response.responseJSON.errors.category_icon);
+                $("#error_name").html(response.responseJSON.errors.category_name);
 
             }
         });

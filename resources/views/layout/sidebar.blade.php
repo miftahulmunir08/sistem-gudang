@@ -30,19 +30,25 @@
     <li class="nav-item {{ $menu_active == 'user' ? 'active' : '' }} ">
         <a class="nav-link" href="{{ route('master.user') }}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>User</span></a>
+            <span>Pegawai</span></a>
     </li>
 
     <li class="nav-item {{ $menu_active == 'category' ? 'active' : '' }} ">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('master.category') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Category</span></a>
     </li>
 
     <li class="nav-item {{ $menu_active == 'product' ? 'active' : '' }} ">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('master.product') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Produk</span></a>
+    </li>
+
+    <li class="nav-item {{ $menu_active == 'location' ? 'active' : '' }} ">
+        <a class="nav-link" href="{{ route('master.location') }}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Lokasi</span></a>
     </li>
 
     <hr class="sidebar-divider">
@@ -52,8 +58,8 @@
         Manajemen Mutasi
     </div>
 
-    <li class="nav-item {{ $menu_active == 'stock' ? 'active' : '' }} ">
-        <a class="nav-link" href="">
+    <li class="nav-item {{ $menu_active == 'mutation' ? 'active' : '' }} ">
+        <a class="nav-link" href="{{ route('mutation.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Mutasi</span></a>
     </li>
@@ -68,7 +74,7 @@
     </div>
 
     <li class="nav-item {{ $menu_active == 'transaksi' ? 'active' : '' }}">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('history.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Laporan Mutasi</span></a>
     </li>

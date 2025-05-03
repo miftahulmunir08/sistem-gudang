@@ -89,7 +89,7 @@
     $('#product-select2, #pegawai-select2').on('change', function() {
         $('#table-mutation').DataTable().ajax.reload();
     });
-
+ 
     function loadData() {
 
         $('#table-mutation').DataTable({

@@ -8,9 +8,25 @@
             <h6 class="m-0 font-weight-bold text-primary">Mutasi Table</h6>
         </div>
         <div class="card-body">
-            <div class="float-right mb-4">
-                <button href="#" class="btn btn-primary text-end" onclick="add()"><i class="fa fa-plus"></i>
-                    Tambah Mutasi</button>
+            <div class="row">
+
+                <div class="col-12 mb-4">
+                    <div class="row justify-content-center">
+                        <div class="col-3">
+                            <select name="product" id="product-select2" class="form-select select2" style="width: 100%;">
+                                <option value="" disabled selected>Select a product</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <select name="pegawai" id="pegawai-select2" class="form-select select2" style="width: 100%;">
+                                <option value="" disabled selected>Select a jenis</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 mb-4 text-right">
+
+                </div>
             </div>
 
             <div class="table-responsive">
@@ -26,93 +42,11 @@
                             <th>Jumlah</th>
                             <th>Jenis</th>
                             <th>Keterangan</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                 </table>
             </div>
 
-            <div class="modal" id="modal-product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Add Customer</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form id="customer_form">
-                            <div class="modal-body">
-
-
-                                <div class="form-group">
-                                    <label for="tanggal">Tanggal</label>
-                                    <input type="date" name="tanggal" class="form-control" id="tanggal">
-                                    <small id="error_tanggal" class="form-text text-danger">We'll never share your email with anyone else.</small>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="location_from">Lokasi Awal</label>
-                                    <select name="location_from" id="location-awal-select2" class="form-select select2" style="width: 100%;">
-                                        <option value="" disabled selected>Select a location</option>
-                                    </select>
-                                    <small id="error_lokasi_awal" class="form-text text-danger">We'll never share your email with anyone else.</small>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="location_to">Lokasi Akhir</label>
-                                    <select name="location_to" id="location-akhir-select2" class="form-select select2" style="width: 100%;">
-                                        <option value="" disabled selected>Select a location</option>
-                                    </select>
-                                    <small id="error_lokasi_akhir" class="form-text text-danger">We'll never share your email with anyone else.</small>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="product">Product</label>
-                                    <select name="product" id="product-select2" class="form-select select2" style="width: 100%;">
-                                        <option value="" disabled selected>Select a location</option>
-                                    </select>
-                                    <small id="error_product" class="form-text text-danger">We'll never share your email with anyone else.</small>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="qty">Qty</label>
-                                    <input name="qty" type="text" class="form-control" id="qty" aria-describedby="emailHelp" placeholder="Enter Qty">
-                                    <small id="error_qty" class="form-text text-danger">We'll never share your email with anyone else.</small>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="jenis_mutasi">Jenis</label>
-                                    <select name="jenis_mutasi" id="jenis-mutasi-select2" class="form-select select2" style="width: 100%;">
-                                        <option value="" disabled selected>Select a jenis</option>
-                                    </select>
-                                    <small id="error_jenis" class="form-text text-danger">We'll never share your email with anyone else.</small>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="pegawai">Pegawai</label>
-                                    <select name="pegawai" id="pegawai-select2" class="form-select select2" style="width: 100%;">
-                                        <option value="" disabled selected>Select a jenis</option>
-                                    </select>
-                                    <small id="error_pegawai" class="form-text text-danger">We'll never share your email with anyone else.</small>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="keterangan">Keterangan</label>
-                                    <textarea class="form-control" name="keterangan" id="keterangan"></textarea>
-                                    <small id="error_keterangan" class="form-text text-danger">We'll never share your email with anyone else.</small>
-                                </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary add-customer">Simpan</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -138,12 +72,8 @@
 
     $(document).ready(function() {
         loadData();
-        getCategory();
         getProduct();
-        getLocation();
-        getLocation2();
         getPegawai();
-        getJenis();
         $('#error_tanggal').css('visibility', 'hidden');
         $('#error_category').css('visibility', 'hidden');
         $('#error_price').css('visibility', 'hidden');
@@ -156,6 +86,10 @@
         $('#error_keterangan').css('visibility', 'hidden');
     });
 
+    $('#product-select2, #pegawai-select2').on('change', function() {
+        $('#table-mutation').DataTable().ajax.reload();
+    });
+
     function loadData() {
 
         $('#table-mutation').DataTable({
@@ -166,7 +100,13 @@
             responsive: true,
             ordering: true,
             serverSide: true,
-            ajax: "{{ route('data.mutation') }}",
+            ajax: {
+                url: "{{ route('data.history.filter-mutation') }}",
+                data: function(d) {
+                    d.product_id = $('#product-select2').val();
+                    d.pegawai_id = $('#pegawai-select2').val();
+                },
+            },
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'no',
@@ -203,15 +143,9 @@
                 {
                     data: 'keterangan',
                     name: 'keterangan'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
                 }
             ]
-        });
+        })
     }
 
     function getCategory(category_id = null) {
@@ -421,7 +355,7 @@
                 getProduct(response.data.product_id);
                 getJenis(response.data.jenis);
                 getPegawai(response.data.pegawai_id);
-                
+
             },
             error: function(response) {
 
@@ -553,7 +487,7 @@
                 if (response.responseJSON.errors.product != undefined) {
                     $('#error_product').css('visibility', 'visible');
                 }
-                
+
                 if (response.responseJSON.errors.qty != undefined) {
                     $('#error_qty').css('visibility', 'visible');
                 }

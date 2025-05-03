@@ -50,6 +50,11 @@ Route::group(['prefix' => 'utility-action', 'middleware' => 'auth:sanctum'], fun
 });
 
 
+Route::group(['prefix' => 'filter-action'], function () {
+    Route::get('/filter-history-mutation', [CT\History\MutationHistoryController::class, 'filter'])->name('data.history.filter-mutation');
+});
+
+
 
 
 // Route::group(['prefix' => 'auth', 'middleware' => 'auth:sanctum'], function () {

@@ -120,4 +120,31 @@ class MutationHistoryController extends Controller
             ->addIndexColumn()
             ->make(true);
     }
+
+    public function filter_api(Request $request)
+    {
+        $mutation = Mutation::with(['lokasi_pertama', 'lokasi_kedua', 'product', 'pegawai']);
+
+        if ($request->filled('product_id')) {
+            $mutation->where('product_id', $request->product_id);
+        }
+
+        if ($request->filled('pegawai_id')) {
+            $mutation->where('pegawai_id', $request->pegawai_id);
+        }
+
+        $data = $mutation->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([
+                'message' => '404',
+                'error' => 'Mutation not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => '200',
+            'data' => $data,
+        ], 200);
+    }
 }

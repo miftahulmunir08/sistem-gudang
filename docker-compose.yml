@@ -1,0 +1,63 @@
+services:
+  app:
+    build: .
+    image: sistem-gudang
+    container_name: sistem-gudang
+    restart: unless-stopped
+    tty : true
+    environment:
+      SERVICES_NAME: app 
+    working_dir: /var/www/laraveldocker/
+    volumes:
+      - .:/var/www/laraveldocker/
+      - ./storage/php.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - sistem-gudang
+
+  webserver:
+    image: nginx:alpine
+    container_name: nginxsistem-gudang
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "2022:80"
+    volumes:
+     - .:/var/www/laraveldocker/
+     - ./storage/:/etc/nginx/conf.d/
+    networks: 
+     - sistem-gudang
+  db:
+   image: mysql:8.0
+   container_name: dbsistem-gudang
+   restart: always
+   tty: true
+   ports: 
+   - "20222:3306"
+   volumes:
+   - lbdata:/var/li/mysql
+   environment:
+    MYSQL_PASSWORD: sistem-gudang
+    MYSQL_ROOT_PASSWORD: sistem-gudang
+    SERVICE_TAGS: dev
+    SERVICES_NAME: mysql
+   networks:
+   - sistem-gudang 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pmasistem-gudang
+    links:
+     - db
+    restart: always
+    ports:
+     - 7000:80
+    networks:
+     - sistem-gudang
+  #NETWORK
+networks:
+ sistem-gudang:
+  driver: bridge
+
+  #VOLUMES
+volumes:
+ lbdata:
+  driver: local

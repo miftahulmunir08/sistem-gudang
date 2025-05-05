@@ -18,7 +18,10 @@ masuk ke terminal
 git clone https://github.com/miftahulmunir08/sistem-gudang.git
 cd nama-proyek-anda
 
-### 2. Install Library melalui composer
+
+🔹 Part 2: Install Dependency
+#### 2. Install Library melalui composer
+```bash
 composer install
 
 ### 3. Setting Key

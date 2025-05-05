@@ -29,12 +29,33 @@ composer install
 php artisan key:generate
 ```
 
-## 🔹 Part 3: Setting Key
-### 4. Setting env
+## 🔹 Part 4: Setting env
+```bash
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=gudang
 DB_USERNAME=root
 DB_PASSWORD=
+```
+
+
+## 🔹 Part 5: Setting env dan Konfigusai DB
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=gudang
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+## 🔹 Part 6: Jalankan Migrasi dan Seeder
+```bash
+php artisan migrate
+php artisan db::seed
+```
+## 🔹 Part 7: Jalankan Server Laravel
+```bash
+php artisan serve
 ```

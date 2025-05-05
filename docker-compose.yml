@@ -7,9 +7,9 @@ services:
     tty : true
     environment:
       SERVICES_NAME: app 
-    working_dir: /var/www/laraveldocker/
+    working_dir: /var/www/sistem-gudang/
     volumes:
-      - .:/var/www/laraveldocker/
+      - .:/var/www/sistem-gudang/
       - ./storage/php.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - sistem-gudang
@@ -22,7 +22,7 @@ services:
     ports:
       - "2022:80"
     volumes:
-     - .:/var/www/laraveldocker/
+     - .:/var/www/sistem-gudang/
      - ./storage/:/etc/nginx/conf.d/
     networks: 
      - sistem-gudang

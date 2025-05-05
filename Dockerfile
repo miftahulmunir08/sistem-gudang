@@ -1,8 +1,8 @@
-FROM php:8.0-fpm
+FROM php:8.3-fpm
 
-COPY composer.* /var/www/laraveldocker/
+COPY composer.* /var/www/sistem-gudang/
 
-WORKDIR /var/www/laraveldocker
+WORKDIR /var/www/sistem-gudang
 
 RUN apt-get update && apt-get install -y \
     build-essential \

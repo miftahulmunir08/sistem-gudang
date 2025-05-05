@@ -30,5 +30,5 @@ Route::group(['prefix' => 'mutation','middleware' => 'auth'], function () {
 });
 
 Route::group(['prefix' => 'history','middleware' => 'auth'], function () {
-    Route::get('/', [CT\History\FilterController::class, 'index'])->name('history.index');
+    Route::get('/', [CT\History\MutationHistoryController::class, 'index'])->name('history.index');
 });

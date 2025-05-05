@@ -25,7 +25,7 @@ class MutasiSeeder extends Seeder
                     'jumlah' => 2,
                     'lokasi_awal' => 1,
                     'lokasi_akhir' => 2
-                ],
+                ], 
                 [
                     'uuid' => Str::uuid(),
                     'product_id' => 2,

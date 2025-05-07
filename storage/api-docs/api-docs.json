@@ -945,7 +945,7 @@
         "/api/pegawai/{id}": {
             "get": {
                 "tags": [
-                    "Location"
+                    "Employee"
                 ],
                 "summary": "Lihat detail pegawai",
                 "description": "Mengambil data pegawai berdasarkan ID",

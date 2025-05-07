@@ -1,13 +1,13 @@
 on:
   push:
     branches:
-      - staging
-name: 🚀 Deploy staging website on push
+      - main
+name: 🚀 Deploy main website on push
 jobs:
   web-deploy:
-    name: 🎉 Deploy to staging
+    name: 🎉 Deploy to main
     runs-on: ubuntu-latest
-    concurrency: staging
+    concurrency: main
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2

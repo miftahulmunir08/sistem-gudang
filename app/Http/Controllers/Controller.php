@@ -20,15 +20,15 @@ use OpenApi\Annotations as OA;
  *     scheme="bearer",
  *     bearerFormat="JWT",
  *     description="Masukkan token Anda. Format: Bearer {token}"
- * )
+ * ) 
  * @OA\OpenApi(
  *     @OA\Server(
- *         url="http://sistem-gudang.test",
- *         description="Local Development"
+ *         url="https://sistemgudang.myporto.icu/",
+ *         description="Production Development"
  *     ),
  *     @OA\Server(
- *         url="https://api.sistem-gudang.com",
- *         description="Production Server"
+ *         url="http://sistem-gudang.test",
+ *         description="Local Server"
  *     )
  * )
  */

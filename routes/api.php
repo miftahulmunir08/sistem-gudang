@@ -3,14 +3,16 @@
 use App\Http\Controllers as CT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\PingController;
 
+
+Route::get('/ping', [PingController::class, 'ping']);
 
 Route::post('login/', [CT\Auth\AuthController::class, 'check_login_api'])->name('auth.check_login_api');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('logout/', [CT\Auth\AuthController::class, 'logout']);
 });
-
 
 Route::apiResource('pegawai', CT\Master\PegawaiController::class)->middleware('auth:sanctum');
 Route::apiResource('categories', CT\Master\CategoryController::class)->middleware('auth:sanctum');
@@ -55,8 +57,6 @@ Route::group(['prefix' => 'filter-action'], function () {
     Route::get('/data-filter-history-mutation', [CT\History\MutationHistoryController::class, 'filter'])->name('data.history.filter-mutation');
     Route::post('/filter-history-mutation-all', [CT\History\MutationHistoryController::class, 'filter_api'])->name('data.history.filter-mutation-all');
 });
-
-
 
 
 // Route::group(['prefix' => 'auth', 'middleware' => 'auth:sanctum'], function () {

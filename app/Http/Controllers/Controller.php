@@ -20,7 +20,7 @@ use OpenApi\Annotations as OA;
  *     scheme="bearer",
  *     bearerFormat="JWT",
  *     description="Masukkan token Anda. Format: Bearer {token}"
- * )
+ * ) 
  * @OA\OpenApi(
  *     @OA\Server(
  *         url="https://sistemgudang.myporto.icu/",

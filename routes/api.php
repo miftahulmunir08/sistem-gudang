@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\PingController;
 
 
 Route::post('login/', [CT\Auth\AuthController::class, 'check_login_api'])->name('auth.check_login_api');
-
+ 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('logout/', [CT\Auth\AuthController::class, 'logout']);
 });

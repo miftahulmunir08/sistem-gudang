@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PingController;
 
 
-Route::get('/ping', [PingController::class, 'ping']);
 
 Route::post('login/', [CT\Auth\AuthController::class, 'check_login_api'])->name('auth.check_login_api');
 

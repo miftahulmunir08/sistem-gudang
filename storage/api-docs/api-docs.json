@@ -1,0 +1,1047 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Sistem Gudang API",
+        "description": "Dokumentasi API untuk aplikasi sistem gudang berbasis Laravel.",
+        "contact": {
+            "email": "munirrmiftahul94@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://sistem-gudang.test",
+            "description": "Local Development"
+        },
+        {
+            "url": "https://api.sistem-gudang.com",
+            "description": "Production Server"
+        }
+    ],
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User login",
+                "description": "Authenticate user and generate token",
+                "operationId": "6c26e80497082f45ac3c234e330e2c00",
+                "requestBody": {
+                    "description": "User credentials",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "admin@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "A list with products"
+                    },
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/category-action/all": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Ambil daftar kategori",
+                "operationId": "26092f3d8f0030921e968defffd4da31",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan daftar kategori",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "name": "string"
+                                        },
+                                        {
+                                            "name": "string"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/categories": {
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Category",
+                "description": "Category",
+                "operationId": "576767d55846190509780f0ac924f153",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "credentials",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "category_name": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Vitamin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan daftar kategori",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "name": "string"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/categories/{id}": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Lihat detail kategori",
+                "description": "Mengambil data kategori berdasarkan ID",
+                "operationId": "5c8346a29060108c56d3edffcada31e7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID kategori",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "6cecf10af2584e8ea7c46fdaab339978"
+                        }
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data kategori ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": 1,
+                                        "category_name": "Vitamin"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Kategori tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Kategori tidak ditemukan"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Update kategori",
+                "description": "Mengubah data kategori berdasarkan ID",
+                "operationId": "ed539215b694ae9a9fcdcc063c76a4f4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "6cecf10af2584e8ea7c46fdaab339978"
+                        }
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "category_name"
+                                ],
+                                "properties": {
+                                    "category_name": {
+                                        "type": "string",
+                                        "example": "Obat-obatan"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Kategori berhasil diupdate",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Kategori berhasil diupdate",
+                                    "data": {
+                                        "id": 1,
+                                        "category_name": "Obat-obatan"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Kategori tidak ditemukan"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Hapus kategori",
+                "description": "Menghapus kategori berdasarkan ID",
+                "operationId": "6068f5b97d2a04600819f6131041d8a6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "6cecf10af2584e8ea7c46fdaab339978"
+                        }
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Kategori berhasil dihapus",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Kategori berhasil dihapus"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Kategori tidak ditemukan"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/location-action/all": {
+            "get": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Ambil daftar lokasi",
+                "operationId": "f1ac0ee757c021cfa4efc6980c294152",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan daftar lokasi",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "name": "string"
+                                        },
+                                        {
+                                            "name": "string"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/locations": {
+            "post": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Location",
+                "description": "Location",
+                "operationId": "9958bddedfc641dfbb622900f4dce423",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "credentials",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "location_name": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Pabrik C"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan daftar lokasi",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "name": "string"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/locations/{id}": {
+            "get": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Lihat detail lokasi",
+                "description": "Mengambil data lokasi berdasarkan ID",
+                "operationId": "60544a0391742d23083decec14a18ca3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID lokasi",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "6cecf10af2584e8ea7c46fdaab339978"
+                        }
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data lokasi ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": 1,
+                                        "location_name": "pabrik C"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Lokasi tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Lokasi tidak ditemukan"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Update Lokasi",
+                "description": "Mengubah data lokasi berdasarkan ID",
+                "operationId": "b38821f7ba38fadc7deed66a81420195",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "6cecf10af2584e8ea7c46fdaab339978"
+                        }
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "location_name"
+                                ],
+                                "properties": {
+                                    "location_name": {
+                                        "type": "string",
+                                        "example": "Pabrik C"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Lokasi berhasil diupdate",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Lokasi berhasil diupdate",
+                                    "data": {
+                                        "id": 1,
+                                        "location_name": "Pabrik C"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Kategori tidak ditemukan"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Hapus lokasi",
+                "description": "Menghapus lokasi berdasarkan ID",
+                "operationId": "b95fb759168b0d73c08263e655002601",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "6cecf10af2584e8ea7c46fdaab339978"
+                        }
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lokasi berhasil dihapus",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Lokasi berhasil dihapus"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Kategori tidak ditemukan"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/pegawai-action/all": {
+            "get": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Ambil daftar pegawai",
+                "operationId": "0d1528ef9d25b343cb382842847f8252",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan daftar employee",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "name": "string"
+                                        },
+                                        {
+                                            "name": "string"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/pegawai": {
+            "post": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Employee",
+                "description": "Employee",
+                "operationId": "5adc326f00276bbd6bfd5b6640431d76",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "credentials",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "pegawai_name": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Hartono"
+                                    },
+                                    "pegawai_email": {
+                                        "type": "email",
+                                        "format": "email",
+                                        "example": "hartono@gmail.com"
+                                    },
+                                    "pegawai_phone": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "085"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan daftar lokasi",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "name": "string",
+                                            "email": "string",
+                                            "phone": "string"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/pegawai/{id}": {
+            "get": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Lihat detail pegawai",
+                "description": "Mengambil data pegawai berdasarkan ID",
+                "operationId": "b76e696b13ad582b910556173f379f64",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID pegawai",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "6cecf10af2584e8ea7c46fdaab339978"
+                        }
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data pegawai ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": 1,
+                                        "pegawai_name": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Lokasi tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Lokasi tidak ditemukan"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Masukkan token Anda. Format: Bearer {token}",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Category",
+            "description": "Category"
+        },
+        {
+            "name": "Location",
+            "description": "Location"
+        },
+        {
+            "name": "Employee",
+            "description": "Employee"
+        }
+    ]
+}

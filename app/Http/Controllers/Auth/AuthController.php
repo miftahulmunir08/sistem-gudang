@@ -7,9 +7,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+ 
 
 class AuthController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -21,7 +23,32 @@ class AuthController extends Controller
 
         return view('auth/login');
     }
+    
 
+    /**
+     * @OA\Post(
+     *   path="/api/login",
+     *   tags={"Auth"},
+     *   summary="User login",
+     *   description="Authenticate user and generate token",
+     *   @OA\RequestBody(
+     *     required=true,
+     *     description="User credentials",
+     *     @OA\MediaType(
+     *       mediaType="application/x-www-form-urlencoded",
+     *       @OA\Schema(
+     *         @OA\Property(property="email", type="string", format="email", example="admin@gmail.com"),
+     *         @OA\Property(property="password", type="string", format="password", example="password")
+     *       )
+     *     )
+     *   ),
+     *   @OA\Response(response="200", description="A list with products"),
+     *   @OA\Response(response="201", description="Successful operation"),
+     *   @OA\Response(response="400", description="Bad Request"),
+     *   @OA\Response(response="401", description="Unauthenticated"),
+     *   @OA\Response(response="403", description="Forbidden"),
+     * )
+     */
 
     public function check_login_api(Request $request)
     {
@@ -63,7 +90,7 @@ class AuthController extends Controller
     public function check_login_web(Request $request)
     {
 
-       $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email|max:255',
             'password' => 'required|string|min:5'
         ]);
@@ -174,5 +201,25 @@ class AuthController extends Controller
                 'message' => 'Successfully logged out'
             ]);
         }
+    }
+
+
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
+
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 }

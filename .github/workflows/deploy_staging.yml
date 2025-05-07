@@ -20,4 +20,4 @@ jobs:
           protocol: ftp
           username: ${{ secrets.FTP_USERNAME_STAGING }}
           password: ${{ secrets.FTP_PASSWORD_STAGING }}
-          server-dir: ./
+          server-dir: laravel/

@@ -36,7 +36,7 @@ class PingController extends Controller
      *     tags={"General"},
      *     @OA\Response(
      *         response=200,
-     *         description="Berhasil",
+     *         description="Berhasil", 
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="pong")
      *         )

@@ -7,11 +7,13 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
+
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+ 
     public function index()
     {
         $data['menu_active'] = 'product';

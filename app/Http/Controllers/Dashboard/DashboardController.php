@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-
+use App\Models\Category;
+use App\Models\Location;
+use App\Models\Pegawai;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,7 +14,7 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    
+
     public function index()
     {
         $data['menu_active'] = 'dashboard';
@@ -68,14 +71,16 @@ class DashboardController extends Controller
 
     public function getDashboardData()
     {
-        // $product_count = Product::all()->count();
-        // $category_count = Category::all()->count();
-        // $customer_count = Customer::all()->count();
+        $product_count = Product::all()->count();
+        $category_count = Category::all()->count();
+        $pegawai_count = Pegawai::all()->count();
+        $lokasi_count = Location::all()->count();
 
         $data = [
-            "product" => 12,
-            "category" => 12,
-            "customer" => 12
+            "product" => $product_count,
+            "category" => $category_count,
+            "pegawai" => $pegawai_count,
+            "location" => $lokasi_count
         ];
 
         return response()->json(['data' => $data]);

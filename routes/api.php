@@ -4,9 +4,10 @@ use App\Http\Controllers as CT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
 Route::post('login/', [CT\Auth\AuthController::class, 'check_login_api'])->name('auth.check_login_api');
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('logout/', [CT\Auth\AuthController::class, 'logout']);
 });
 
@@ -24,7 +25,7 @@ Route::group(['prefix' => 'pegawai-action', 'middleware' => 'auth:sanctum'], fun
 });
 
 
-Route::group(['prefix' => 'category-action', 'middleware' => 'auth:sanctum'], function () {
+Route::group(['prefix' => 'category-action', 'middleware' => ['auth:sanctum']], function () {
     Route::get('/data', [CT\Master\CategoryController::class, 'getData'])->name('data.category');
     Route::get('/all', [CT\Master\CategoryController::class, 'getAll'])->name('data.category.all');
 });

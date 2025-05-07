@@ -1,0 +1,23 @@
+on:
+  push:
+    branches:
+      - main
+name: 🚀 Deploy main website on push
+jobs:
+  web-deploy:
+    name: 🎉 Deploy to main
+    runs-on: ubuntu-latest
+    concurrency: main
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.FTP_SERVER_STAGING }}
+          port: 21
+          protocol: ftp
+          username: ${{ secrets.FTP_USERNAME_STAGING }}
+          password: ${{ secrets.FTP_PASSWORD_STAGING }}
+          server-dir: ./

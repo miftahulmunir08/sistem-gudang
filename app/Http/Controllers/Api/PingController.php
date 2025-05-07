@@ -39,7 +39,7 @@ class PingController extends Controller
      *         description="Berhasil", 
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="pong")
-     *         )
+     *         ) 
      *     )
      * )
      */
